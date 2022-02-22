@@ -3,14 +3,15 @@
 #include <string.h>
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! GLOBAL VARIABLES !!!!!!!!
-int password=651205;
-int i=0;
+int password = 651205;
+int i = 0;
 int sr = 0;
 int order_sr = 0;
 int bill = 0;
 
 //!!!!!!!!!!!!!!!!!!!!!! LINKED LIST !!!!!!!!!!!!!
-struct node {
+struct node
+{
     int data;
     char foodname[100];
     int quantity;
@@ -19,36 +20,41 @@ struct node {
 };
 
 //!!!!!!!!!!!!!!!! HEAD POINTERS !!!!!!!!!!!!!!!!!!!!!!
-struct node *head_a=NULL;
-struct node *head_c=NULL;
-struct node *order=NULL;
+struct node *head_a = NULL;
+struct node *head_c = NULL;
+struct node *order = NULL;
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!     FUNCTIONS  !!!!!!!!!!!!!!
 
-struct node *createadmin(struct node *head_a,char foodname[100],float price){
-    struct node *temp=malloc(sizeof(struct node));
-    temp->data=i+1;
-    strcpy(temp->foodname,foodname);
-    temp->price=price;
-    temp->quantity=0;
-    temp->next=NULL;
-    struct node *ptr;    
-    ptr=head_a;
-    if (ptr==NULL){
-        head_a=temp;
+struct node *createadmin(struct node *head_a, char foodname[100], float price)
+{
+    struct node *temp = malloc(sizeof(struct node));
+    temp->data = i + 1;
+    strcpy(temp->foodname, foodname);
+    temp->price = price;
+    temp->quantity = 0;
+    temp->next = NULL;
+    struct node *ptr;
+    ptr = head_a;
+    if (ptr == NULL)
+    {
+        head_a = temp;
     }
-    else{
-        while(ptr->next!=NULL){
-            ptr=ptr->next;
+    else
+    {
+        while (ptr->next != NULL)
+        {
+            ptr = ptr->next;
         }
-        ptr->next=temp;
+        ptr->next = temp;
     }
-    i=i+1;
+    i = i + 1;
     return head_a;
 }
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! MAIN MENU !!!!!!!!!!!!!!!!!!!!!
 
-void mainmenu(){
+void mainmenu()
+{
     printf("\n\t\t\t\t\t\t\t\t Press 1 for OWNER\n");
     printf("\t\t\t\t\t\t\t\t Press 2 for CUSTOMER\n");
     printf("\t\t\t\t\t\t\t\t Press 3 to EXIT\n");
@@ -57,72 +63,75 @@ void mainmenu(){
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! VIEW SALES !!!!!!!!!!!!!!!!!!!!!!!
 
-
-
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ADD ITEMS TO ORDER MENU !!!!!!!!!!!!!!
 
-struct node  *addmenu(struct node *head_a){
+struct node *addmenu(struct node *head_a)
+{
     int price;
     char c[100];
     printf("\nEnter the name of food item : ");
-    scanf("%s",&c);
+    scanf("%s", &c);
     printf("Enter the price of food item : ");
-    scanf("%d",&price);
-    createadmin(head_a,c,price);
+    scanf("%d", &price);
+    createadmin(head_a, c, price);
     printf("\nItem Added!\n");
     return head_a;
 }
 
-
-
 //!!!!!!!!!!!!!!!!!!!!!!!!!  DISPLAY MENU FOR ADMIN !!!!!!!!!!!!!!!!
-void displayadmin(struct node *head_a){
+void displayadmin(struct node *head_a)
+{
     struct node *ptr;
-    ptr=head_a;
+    ptr = head_a;
     printf("\033[0;33m");
     printf("\n\n\t\t\t\t\t\t-----------------------------------------------------------\n");
     printf("\t\t\t\t\t\t\tNo.\t\tFood Item\t\tPrice\n");
     printf("\t\t\t\t\t\t-----------------------------------------------------------\n");
-    while (ptr!=NULL){
-        printf("\t\t\t\t\t\t\t%d\t\t",ptr->data);
-        printf("%s\t\t\t",ptr->foodname);
-        printf("%.2f\n",ptr->price);
-        ptr=ptr->next;
+    while (ptr != NULL)
+    {
+        printf("\t\t\t\t\t\t\t%d\t\t", ptr->data);
+        printf("%s\t\t\t", ptr->foodname);
+        printf("%.2f\n", ptr->price);
+        ptr = ptr->next;
     }
     printf("\t\t\t\t\t\t-----------------------------------------------------------\n\n\n");
     printf("\033[0m");
 }
 
-
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  DELETE ITEMS FROM ADMIN MENU  !!!!!!!!!!!!!!!!
 
-struct node *deletemenu(struct node *head_a){
+struct node *deletemenu(struct node *head_a)
+{
     int data;
     displayadmin(head_a);
     printf("Enter the number of item to be deleted : ");
-    scanf("%d",&data);
-    struct node *ptr1,*ptr2,*ptr3;
-    ptr1=head_a;
-    ptr2=head_a;
-    if (data==1){
-        head_a=head_a->next;
-        ptr3=head_a;
+    scanf("%d", &data);
+    struct node *ptr1, *ptr2, *ptr3;
+    ptr1 = head_a;
+    ptr2 = head_a;
+    if (data == 1)
+    {
+        head_a = head_a->next;
+        ptr3 = head_a;
     }
-    else {
-        while (ptr1->next->data!=data){
-            ptr1=ptr1->next;
+    else
+    {
+        while (ptr1->next->data != data)
+        {
+            ptr1 = ptr1->next;
         }
-        while (ptr2->data!=data){
-            ptr2=ptr2->next;
+        while (ptr2->data != data)
+        {
+            ptr2 = ptr2->next;
         }
-        ptr1->next=ptr2->next;
-        ptr2->next=NULL;
-        ptr3=ptr1->next;
-
+        ptr1->next = ptr2->next;
+        ptr2->next = NULL;
+        ptr3 = ptr1->next;
     }
-    while (ptr3!=NULL){
-        ptr3->data=ptr3->data-1;
-        ptr3=ptr3->next;
+    while (ptr3 != NULL)
+    {
+        ptr3->data = ptr3->data - 1;
+        ptr3 = ptr3->next;
     }
     printf("\033[0;31m");
     printf("\nItem Deleted!\n");
@@ -188,7 +197,7 @@ struct node *place_order(struct node *head_a)
     printf("Order Placed!!\n");
     printf("\033[0m");
     return head_a;
-} 
+}
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! DISPLAY ORDER !!!!!!!!!!!!!!
 void displayorder()
@@ -198,11 +207,12 @@ void displayorder()
     printf("\n\n\t\t\t\t\t\t------------------------------------------------------------------------------\n");
     printf("\t\t\t\t\t\t\tNo.\t\tFood Item\t\tPrice\t\tQuantity\n");
     printf("\t\t\t\t\t\t------------------------------------------------------------------------------\n");
-    if (ptr==NULL){
+    if (ptr == NULL)
+    {
         printf("\t\t\t\t\t\t\tNA\t\tNA\t\t\tNA\t\tNA\n");
         printf("\t\t\t\t\t\t------------------------------------------------------------------------------\n\n\n");
-    printf("\033[0m");
-        return ;
+        printf("\033[0m");
+        return;
     }
     while (ptr != NULL)
     {
@@ -226,7 +236,7 @@ void delete_item()
     printf("Enter the quantity of items to be deleted : ");
     scanf("%d", &quantity);
     printf("\033[0m");
-    if (head_c->next == NULL) 
+    if (head_c->next == NULL)
     {
         ptr->quantity = (ptr->quantity) - quantity;
         if (ptr->quantity < 0)
@@ -241,21 +251,22 @@ void delete_item()
         {
             free(head_c);
             order = NULL;
+            head_c = NULL;
         }
     }
 
-    else if (choice == 1) 
+    else if (choice == 1)
     {
         ptr->quantity = (ptr->quantity) - quantity;
         ptr = head_c, ptr1 = head_c;
 
-        if (ptr->quantity < 0) 
+        if (ptr->quantity < 0)
         {
             printf("\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Deletion amount more than ordered quantity !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
             return;
         }
 
-        else if (ptr->quantity == 0) 
+        else if (ptr->quantity == 0)
         {
             ptr1 = ptr1->next;
             while (ptr1 != NULL)
@@ -264,14 +275,14 @@ void delete_item()
                 ptr1 = ptr1->next;
             }
             head_c = head_c->next;
-            
+
             ptr = NULL;
         }
     }
 
-    else 
+    else
     {
-        while (ptr->next->data != choice) 
+        while (ptr->next->data != choice)
             ptr = ptr->next;
 
         ptr->next->quantity = (ptr->next->quantity) - quantity;
@@ -296,7 +307,7 @@ void delete_item()
                 ptr1 = ptr1->next;
             }
         }
-        ptr1=order;       
+        ptr1 = order;
     }
     order_sr--;
     printf("\033[0;31m");
@@ -308,7 +319,7 @@ void delete_item()
 void displaybill()
 {
     struct node *ptr = head_c;
-    bill=0;
+    bill = 0;
     displayorder();
     printf("\033[0;33m");
     while (ptr != NULL)
@@ -316,13 +327,13 @@ void displaybill()
         bill += (ptr->price) * (ptr->quantity);
         ptr = ptr->next;
     }
-    printf("\t\t\t\t\t\t\t\t\t\t\t     Final Bill :\t%d\n\n",bill);
+    printf("\t\t\t\t\t\t\t\t\t\t\t     Final Bill :\t%d\n\n", bill);
     printf("\033[0m");
 }
 
-
 //!!!!!!!!!!!!!!!!!!!!!!!!!!! ADMIN MENU !!!!!!!!!!!!!!!!
-void adminmenu(){
+void adminmenu()
+{
     printf("\033[0;32m");
     printf("\t\t\t\t\t\t\t\tPress 1 to VIEW total sales\n");
     printf("\t\t\t\t\t\t\t\tPress 2 to ADD new items to order menu\n");
@@ -333,9 +344,9 @@ void adminmenu(){
     printf("Enter your choice ---->  ");
 }
 
-
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! CUSTOMER MENU !!!!!!!!!!!!!!!!!!!
-void customermenu(){
+void customermenu()
+{
     printf("\033[0;32m");
     printf("\t\t\t\t\t\t\t\tPress 1 to PLACE your order\n");
     printf("\t\t\t\t\t\t\t\tPress 2 to VIEW your ordered items\n");
@@ -348,46 +359,53 @@ void customermenu(){
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ADMIN CHOICE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-void admin(){
-    while (1){
+void admin()
+{
+    while (1)
+    {
         int choice1;
         adminmenu();
-        scanf("%d",&choice1);
-        if (choice1==5){
+        scanf("%d", &choice1);
+        if (choice1 == 5)
+        {
             break;
         }
-        switch (choice1) {
+        switch (choice1)
+        {
         case 1:
             displayorder();
             break;
         case 2:
-            head_a=addmenu(head_a);
+            head_a = addmenu(head_a);
             break;
         case 3:
-            head_a=deletemenu(head_a);
+            head_a = deletemenu(head_a);
             break;
         case 4:
             displayadmin(head_a);
             break;
         default:
-            printf("Incorrect Choice! Please choose a valid option.\n");    
+            printf("Incorrect Choice! Please choose a valid option.\n");
         }
     }
-
 }
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!! CUSTOMER CHOICE !!!!!!!!!!!!!!!!!!!!!!!!!!!
-void customer(){
-    while (1){
+void customer()
+{
+    while (1)
+    {
         int choice2;
         customermenu();
-        scanf("%d",&choice2);
-        if (choice2==5){
+        scanf("%d", &choice2);
+        if (choice2 == 5)
+        {
             break;
         }
-        switch (choice2) {
+        switch (choice2)
+        {
         case 1:
             displayadmin(head_a);
-            head_a=place_order(head_a);
+            head_a = place_order(head_a);
             break;
         case 2:
             displayorder();
@@ -399,69 +417,74 @@ void customer(){
             displaybill();
             break;
         default:
-            printf("Incorrect Choice! Please choose a valid option.\n");    
+            printf("Incorrect Choice! Please choose a valid option.\n");
         }
     }
-
 }
 
-
 //!!!!!!!!!!!!!!!!!!!!!!!! PASSWORD !!!!!!!!!!!
-void pass(){
+void pass()
+{
     printf("\n\t\t\t\t\t\t\t\tEnter the password : ");
+    int b;
+    printf("\033[0;33m");
+    scanf("%d", &b);
+    printf("\033[0m");
+    printf("\n");
+    if (b == password)
+    {
+        admin();
+    }
+    else
+    {
+        printf("Wrong Password!\n");
         int b;
-        printf("\033[0;33m");
-        scanf("%d",&b);
-        printf("\033[0m");
-        printf("\n");
-        if (b==password){
-            admin();
+        printf("\n\t\t\t\t\t\t\t\tPress 1 to RE-ENTER the password\n");
+        printf("\t\t\t\t\t\t\t\tPress 2 to EXIT to main menu\n");
+        printf("Enter your choice ---->");
+        scanf("%d", &b);
+        switch (b)
+        {
+        case 1:
+            pass();
+            break;
+        case 2:
+            break;
+        default:
+            printf("Invaid option!\nBack to Main Menu!\n");
+            break;
         }
-        else{
-            printf("Wrong Password!\n");
-            int b;
-            printf("\n\t\t\t\t\t\t\t\tPress 1 to RE-ENTER the password\n");
-            printf("\t\t\t\t\t\t\t\tPress 2 to EXIT to main menu\n");
-            printf("Enter your choice ---->");
-            scanf("%d",&b);
-            switch (b)
-            {
-            case 1 :
-                pass();
-                break;
-            case 2 :
-                break;
-            default:
-                printf("Invaid option!\nBack to Main Menu!\n");
-                break;
-            }
-        }
+    }
 }
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! MAIN !!!!!!!!!!!!!!!!!!!!!!!!
-int main(){
-    head_a=createadmin(head_a,"A",100.00);
-    head_a=createadmin(head_a,"B",150.00);
-    head_a=createadmin(head_a,"C",200.00);
-    head_a=createadmin(head_a,"D",50.00);
-    head_a=createadmin(head_a,"E",100.00);   
+int main()
+{
+    head_a = createadmin(head_a, "A", 100.00);
+    head_a = createadmin(head_a, "B", 150.00);
+    head_a = createadmin(head_a, "C", 200.00);
+    head_a = createadmin(head_a, "D", 50.00);
+    head_a = createadmin(head_a, "E", 100.00);
     printf("\033[0;33m");
     printf("\n\t\t\t\t\t***************************************************************************\n");
     printf("\n\t\t\t\t\t\t\t\t   WELCOME TO OUR RESTAURANT \n\n");
     printf("\t\t\t\t\t****************************************************************************\n");
     printf("\033[0m");
     int choice;
-    while (1){
+    while (1)
+    {
         mainmenu();
-        scanf("%d",&choice);
-        if (choice==3){
+        scanf("%d", &choice);
+        if (choice == 3)
+        {
             printf("\033[0;33m");
             printf("\n\t\t!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
             printf("\n\t\t\t\t\t\t\t\t THANK YOU FOR VISTING  \n\n");
             printf("\t\t!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-            printf("\033[0m");         
+            printf("\033[0m");
         }
-        switch (choice) {
+        switch (choice)
+        {
         case 1:
             pass();
             break;
@@ -471,8 +494,7 @@ int main(){
         case 3:
             exit(1);
         default:
-            printf("Incorrect Choice! Please choose a valid option.\n");    
+            printf("Incorrect Choice! Please choose a valid option.\n");
         }
     }
-
 }
